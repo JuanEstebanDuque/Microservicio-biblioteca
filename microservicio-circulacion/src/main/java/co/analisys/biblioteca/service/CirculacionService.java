@@ -42,7 +42,7 @@ public class CirculacionService {
 
             catalogoClient.actualizarDisponibilidad(libroId.getLibroid_value(), false);
 
-            notificationClient.notificar(new NotificacionDTO(usuarioId.getUsuarioid_value(), "Libro prestado: " + libroId.getLibroid_value()));
+            notificationClient.enviarNotificacion(new NotificacionDTO(usuarioId.getUsuarioid_value(), "Libro prestado: " + libroId.getLibroid_value()));
         } else {
             throw new LibroNoDisponibleException(libroId);
         }

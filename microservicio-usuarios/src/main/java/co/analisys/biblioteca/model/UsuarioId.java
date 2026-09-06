@@ -1,14 +1,17 @@
 package co.analisys.biblioteca.model;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor(force = true)  // Generates a no-argument constructor
-@AllArgsConstructor // Generates a constructor with all fields as arguments
-public class UsuarioId {
+import java.io.Serializable;
 
-    private final String usuario_value;
-    // constructor y métodos
+@Embeddable
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsuarioId implements Serializable {
+
+    private String usuario_value;
 }

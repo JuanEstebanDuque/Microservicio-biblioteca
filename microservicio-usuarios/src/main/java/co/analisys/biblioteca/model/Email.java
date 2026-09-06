@@ -1,17 +1,17 @@
 package co.analisys.biblioteca.model;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+@Embeddable
 @Data
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
-public class Email {
+public class Email implements Serializable {
 
-    private final String email_value;
-    // constructor y métodos de validación
+    private String email_value;
 }
