@@ -1,8 +1,6 @@
 package co.analisys.biblioteca.controller;
 
-import co.analisys.biblioteca.model.Email;
-import co.analisys.biblioteca.model.Usuario;
-import co.analisys.biblioteca.model.UsuarioId;
+import co.analisys.biblioteca.model.*;
 import co.analisys.biblioteca.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,6 +17,26 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Operation(
+            summary = "Registrar un nuevo usuario",
+            description = "Crea un nuevo usuario en el sistema de biblioteca."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario registrado correctamente"),
+            @ApiResponse(responseCode = "401", description = "Token JWT ausente o inválido")
+    })
+    @PostMapping
+    public void registrarUsuario(@RequestBody RegistrarUsuarioRequest request) {
+        Usuario usuario = Usuario.builder()
+                .id(new UsuarioId(request.getId()))
+                .nombre(request.getNombre())
+                .email(new Email(request.getEmail()))
+                .direccion(new Direccion(request.getCalle(), request.getCiudad(), request.getCodigoPostal()))
+                .credenciales(new Credenciales(request.getUsername(), request.getPasswordHash()))
+                .build();
+        usuarioService.registrarUsuario(usuario);
+    }
 
     @Operation(
             summary = "Obtener usuario por ID",

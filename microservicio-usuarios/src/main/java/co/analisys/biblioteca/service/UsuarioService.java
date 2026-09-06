@@ -17,6 +17,10 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
+    public void registrarUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
     public void cambiarEmailUsuario(UsuarioId id, Email nuevoEmail) {
         Usuario usuario = obtenerUsuario(id);
         usuario.cambiarEmail(nuevoEmail);

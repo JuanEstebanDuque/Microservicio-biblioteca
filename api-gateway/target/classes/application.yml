@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: usuarios-service
+          uri: lb://usuarios-service
+          predicates:
+            - Path=/usuarios/**
+
+        - id: catalogo-service
+          uri: lb://catalogo-service
+          predicates:
+            - Path=/libros/**
+
+        - id: circulacion-service
+          uri: lb://circulacion-service
+          predicates:
+            - Path=/circulacion/**
+
+        - id: notificacion-service
+          uri: lb://notificacion-service
+          predicates:
+            - Path=/notificar/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring.security.oauth2.resourceserver.jwt.issuer-uri: http://localhost:8180/realms/biblioteca
