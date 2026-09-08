@@ -18,6 +18,14 @@ public class CatalogoService {
         this.libroRepository = libroRepository;
     }
 
+    public void registrarLibro(Libro libro) {
+        libroRepository.save(libro);
+    }
+
+    public List<Libro> obtenerTodosLosLibros() {
+        return libroRepository.findAll();
+    }
+
     public Libro obtenerLibro(LibroId id) {
         return libroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Libro no encontrado"));

@@ -1,7 +1,6 @@
 package co.analisys.biblioteca.controller;
 
-import co.analisys.biblioteca.model.Libro;
-import co.analisys.biblioteca.model.LibroId;
+import co.analisys.biblioteca.model.*;
 import co.analisys.biblioteca.service.CatalogoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +22,38 @@ public class CatalogoController {
     @Autowired
     public CatalogoController(CatalogoService catalogoService) {
         this.catalogoService = catalogoService;
+    }
+
+    @Operation(
+            summary = "Registrar un nuevo libro",
+            description = "Crea un nuevo libro en el catálogo de la biblioteca."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Libro registrado correctamente"),
+            @ApiResponse(responseCode = "401", description = "Token JWT ausente o inválido")
+    })
+    @PostMapping
+    public void registrarLibro(@RequestBody RegistrarLibroRequest request) {
+        Libro libro = new Libro();
+        libro.setId(new LibroId(request.getId()));
+        libro.setTitulo(request.getTitulo());
+        libro.setIsbn(new ISBN(request.getIsbn()));
+        libro.setCategoria(new Categoria(request.getCategoria()));
+        libro.setDisponible(request.isDisponible());
+        catalogoService.registrarLibro(libro);
+    }
+
+    @Operation(
+            summary = "Listar todos los libros",
+            description = "Retorna todos los libros registrados en el catálogo."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista de libros retornada correctamente"),
+            @ApiResponse(responseCode = "401", description = "Token JWT ausente o inválido")
+    })
+    @GetMapping
+    public List<Libro> obtenerTodosLosLibros() {
+        return catalogoService.obtenerTodosLosLibros();
     }
 
     @Operation(
